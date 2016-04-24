@@ -1,0 +1,35 @@
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+}
+header {
+    display: block;
+    min-height: 10%;
+    width: 100%;
+    padding: 5px;
+    background-color: green;
+    color: white;
+    margin-bottom: 10px;
+}
+footer {
+    display: block;
+    min-height: 5%;
+    padding: 5px;
+    border-top: 1px solid grey;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+}
+.container {
+    display: block;
+    min-height: 82%;
+}
+.tab-content {
+    display: block;
+    min-height: 100%;
+    overflow-y: scroll;
+}
+.form-inline {
+    padding-bottom: 20px;
+}
