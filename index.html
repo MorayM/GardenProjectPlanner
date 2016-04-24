@@ -62,6 +62,10 @@
                         <tbody>
                         </tbody>
                     </table>
+                    <div>
+                        <a role="button" id="csvDownload" class="btn btn-success">Get plant download</a>
+                        <a download="plants.csv" id="csvDlLink" class="btn btn-warning" style="display:none">Download plants</a>
+                    </div>
                 </div>
                 <div class="tab-pane" id="gardens">
                     <div id="gardenButtons"></div>
@@ -116,8 +120,8 @@
             </div>
         </div>
         <footer>
-            <a role="button" id="saveAll" class="btn btn-success">Save all</a>
-            <a role="button" id="clearCache" class="btn btn-warning">Clear cache</a>
+            <a role="button" id="saveAll" class="btn btn-success">Get backup link</a>
+            <a download="backup.json" id="dlLink" class="btn btn-warning" style="display:none">Download backup</a>
         </footer>
         <script>
             $('body').height(window.innerHeight)

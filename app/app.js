@@ -22,6 +22,8 @@ var data = {
 var pt;
 var gt;
 var activeGarden = 0;
+var jsonFile;
+var csvFile;
 
 $(document).ready(function(){
     
@@ -61,6 +63,8 @@ $(document).ready(function(){
         ]
     })
     
+    $('#saveAll').unbind('click').on('click', backup);
+    $('#csvDownload').unbind('click').on('click', getLibraryDownload);
     $('#addPlant').unbind('click').on('click', addNewPlant);
     $('#gardens').on('click', '.select-garden', loadGardenData);
     $('#gardens').on('click', '#addPlantToGarden', addPlantToGarden);
@@ -93,8 +97,8 @@ $(document).ready(function(){
             var newPlant = [
                 $('#addLatin').val(),
                 $('#addCommon').val(),
-                parseInt($('#addSpread').val()),
-                parseInt($('#addHeight').val()),
+                parseFloat($('#addSpread').val()),
+                parseFloat($('#addHeight').val()),
                 parseInt($('#addCount').val()),
                 '<button class="deleteGardenRow">x</button>'
             ]
@@ -191,6 +195,53 @@ $(document).ready(function(){
                 ]
             });
         }
+    }
+    
+    function backup() {
+        var content = JSON.stringify(data);
+        var blob = new Blob([content], {type: 'application/json'});
+        
+        if (jsonFile) {
+            window.URL.revokeObjectURL(jsonFile);
+        }
+        
+        jsonFile = window.URL.createObjectURL(blob);
+        
+        $('#dlLink').attr('href', jsonFile);
+        $('#dlLink').attr('style', 'display:block');
+        
+        setTimeout(hideBackup, 10000);
+    }
+    
+    function getLibraryDownload() {
+        var csvString = 'Latin name, Common name, Spread, Height, Count\n';
+        for (var i = 0; i < data.allPlants.length; i++) {
+            csvString += data.allPlants[i].slice(0, 5).join();
+            csvString += '\n';
+        }
+        
+        var blob = new Blob([csvString], {type: 'text/csv'});
+        
+        if (csvFile) {
+            window.URL.revokeObjectURL(csvFile);
+        }
+        
+        csvFile = window.URL.createObjectURL(blob);
+        
+        $('#csvDlLink').attr('href', csvFile);
+        $('#csvDlLink').attr('style', 'display:block');
+        
+        setTimeout(hideCsv, 10000);
+    }
+    
+    function hideBackup() {
+        $('#dlLink').attr('href', '#');
+        $('#dlLink').attr('style', 'display:none');
+    }
+    
+    function hideCsv() {
+        $('#csvDlLink').attr('href', '#');
+        $('#csvDlLink').attr('style', 'display:none');
     }
     
     function getPlantByLatin(latin) {
