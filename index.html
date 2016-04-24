@@ -3,12 +3,13 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="styles/site.css">
         <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <script src="lib/blob.js" type="text/javascript"></script>
         <script src="lib/FileSaver.min.js" type="text/javascript"></script>
-        <script src="app/app.js" type="text/javascript"></script>
     </head>
     <body>
         <header><h1>Charlotte's Garden Planner</h1></header>
@@ -21,21 +22,6 @@
             <div class="tab-content" id="plants">
                 <div class="tab-pane active" id="plants">
                     <h2 id="plants">Plant library</h2>
-                    <table id="allPlants" class="table table-striped" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Latin name</th>
-                                <th>Common name</th>
-                                <th>Spread (m)</th>
-                                <th>Height (m)</th>
-                                <th>Count</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
                     <h4>Add item</h4>
                     <div class="form-inline">
                         <div class="form-group">
@@ -60,6 +46,20 @@
                             <button id="addPlant" class="btn btn-success">Add</button>
                         </div>                        
                     </div>
+                    <table id="allPlants" class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Latin name</th>
+                                <th>Common name</th>
+                                <th>Spread (m)</th>
+                                <th>Height (m)</th>
+                                <th>Count</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="tab-pane" id="gardens">
                     <h2 id="gardens">Gardens</h2>
@@ -75,5 +75,6 @@
         <script>
             $('body').height(window.innerHeight)
         </script>
+        <script src="app/app.js" type="text/javascript"></script>
     </body>
 </html>
