@@ -60,7 +60,8 @@ $(document).ready(function(){
             null,
             null,
             {'orderable': false}
-        ]
+        ],
+        'lengthMenu':[[10, 25, 50, -1], [10, 25, 50, 'All']]
     })
     
     $('#saveAll').unbind('click').on('click', backup);
@@ -87,7 +88,8 @@ $(document).ready(function(){
                 null,
                 null,
                 {'orderable': false}
-            ]
+            ],
+            'lengthMenu':[[10, 25, 50, -1], [10, 25, 50, 'All']]
         });
     }
     
