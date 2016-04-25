@@ -87,6 +87,7 @@ $(document).ready(function(){
                 null,
                 null,
                 null,
+                null,
                 {'orderable': false}
             ],
             'lengthMenu':[[10, 25, 50, -1], [10, 25, 50, 'All']]
@@ -99,6 +100,7 @@ $(document).ready(function(){
             var newPlant = [
                 $('#addLatin').val(),
                 $('#addCommon').val(),
+                parseInt($('#addId').val()),
                 parseFloat($('#addSpread').val()),
                 parseFloat($('#addHeight').val()),
                 parseInt($('#addCount').val()),
@@ -112,6 +114,7 @@ $(document).ready(function(){
             //is plant already known?
             var index = getPlantIndexByLatin($('#addLatin').val());
             newPlant = newPlant.slice();
+            newPlant.splice(2, 1);
             newPlant[5] = '<button class="deleteRow">x</button>';
             if (index >= 0) {
                 //update total
@@ -126,6 +129,7 @@ $(document).ready(function(){
             //clear form
             $('#addLatin').val('');
             $('#addCommon').val('');
+            $('#addId').val('');
             $('#addSpread').val('');
             $('#addHeight').val('');
             $('#addCount').val('');
@@ -137,7 +141,7 @@ $(document).ready(function(){
         var row = gt.row($(this).parents('tr')).remove().draw();
         
         var gardenIndex = getActiveGardenPlantIndexByLatin($(this).parents('tr').children().first().text());
-        var count = data.allGardens[activeGarden].plants[gardenIndex][4];
+        var count = data.allGardens[activeGarden].plants[gardenIndex][5];
         
         // remove from data behind
         data.allGardens[activeGarden].plants.splice(gardenIndex, 1);
@@ -189,6 +193,7 @@ $(document).ready(function(){
                 'data': data.allGardens[activeGarden].plants,
                 'columns': [
                     {'className': 'italic'},
+                    null,
                     null,
                     null,
                     null,
