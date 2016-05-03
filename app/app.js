@@ -225,8 +225,7 @@ $(document).ready(function(){
             csvString += '\n';
         }
         
-        csvString = csvString.replace(/\u201C/g, '"');
-        csvString = csvString.replace(/\u201D/g, '"');
+        csvString = replaceUnicodeQuotes(csvString);
         
         var blob = new Blob([csvString], {type: 'text/csv'});
         
@@ -247,8 +246,7 @@ $(document).ready(function(){
             csvString += data.allGardens[activeGarden].plants[i].slice(3, 6).join() + '\n';
         }
         
-        csvString = csvString.replace(/\u201C/g, '"');
-        csvString = csvString.replace(/\u201D/g, '"');
+        csvString = replaceUnicodeQuotes(csvString);
         
         var blob = new Blob([csvString], {type: 'text/csv'});
         
@@ -306,6 +304,14 @@ $(document).ready(function(){
         for (var i = 0; i < data.allGardens.length; i++) {
             $('#gardenButtons').append('<button class="btn btn-success select-garden" gardenindex="' + i + '">' + data.allGardens[i].name + '</button>');
         }
+    }
+    
+    function replaceUnicodeQuotes(input) {
+        input = input.replace(/\u201C/g, '"');
+        input = input.replace(/\u201D/g, '"');
+        input = input.replace(/\u2018/g, '\'');
+        input = input.replace(/\u2019/g, '\'');
+        return input;
     }
     
     createGardenButtons();
