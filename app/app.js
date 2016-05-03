@@ -225,6 +225,9 @@ $(document).ready(function(){
             csvString += '\n';
         }
         
+        csvString = csvString.replace(/\u201C/g, '"');
+        csvString = csvString.replace(/\u201D/g, '"');
+        
         var blob = new Blob([csvString], {type: 'text/csv'});
         
         if (csvFile) {
@@ -243,6 +246,9 @@ $(document).ready(function(){
             csvString += data.allGardens[activeGarden].plants[i].slice(0, 2).join() + ',';
             csvString += data.allGardens[activeGarden].plants[i].slice(3, 6).join() + '\n';
         }
+        
+        csvString = csvString.replace(/\u201C/g, '"');
+        csvString = csvString.replace(/\u201D/g, '"');
         
         var blob = new Blob([csvString], {type: 'text/csv'});
         
