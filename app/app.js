@@ -24,6 +24,7 @@ var gt;
 var activeGarden = 0;
 var jsonFile;
 var csvFile;
+var gardenCsv;
 
 $(document).ready(function(){
     
@@ -64,8 +65,6 @@ $(document).ready(function(){
         'lengthMenu':[[10, 25, 50, -1], [10, 25, 50, 'All']]
     })
     
-    $('#saveAll').unbind('click').on('click', backup);
-    $('#csvDownload').unbind('click').on('click', getLibraryDownload);
     $('#addPlant').unbind('click').on('click', addNewPlant);
     $('#gardens').on('click', '.select-garden', loadGardenData);
     $('#gardens').on('click', '#addPlantToGarden', addPlantToGarden);
@@ -79,6 +78,7 @@ $(document).ready(function(){
         
         activeGarden = $(this).attr('gardenindex') ? parseInt($(this).attr('gardenindex')) : 0;
         $('.garden-name').text(data.allGardens[activeGarden].name);
+        $('#downloadGarden').attr('download', data.allGardens[activeGarden].name + '.csv');
         gt = $('#gardenPlants').DataTable({
             'data': data.allGardens[activeGarden].plants,
             'columns': [
@@ -92,6 +92,7 @@ $(document).ready(function(){
             ],
             'lengthMenu':[[10, 25, 50, -1], [10, 25, 50, 'All']]
         });
+        setGardenDownload();
     }
     
     function addPlantToGarden() {        
@@ -214,13 +215,10 @@ $(document).ready(function(){
         
         jsonFile = window.URL.createObjectURL(blob);
         
-        $('#dlLink').attr('href', jsonFile);
-        $('#dlLink').attr('style', 'display:block');
-        
-        setTimeout(hideBackup, 10000);
+        $('#saveAll').attr('href', jsonFile);
     }
     
-    function getLibraryDownload() {
+    function setLibraryDownload() {
         var csvString = 'Latin name, Common name, Spread, Height, Count\n';
         for (var i = 0; i < data.allPlants.length; i++) {
             csvString += data.allPlants[i].slice(0, 5).join();
@@ -235,10 +233,26 @@ $(document).ready(function(){
         
         csvFile = window.URL.createObjectURL(blob);
         
-        $('#csvDlLink').attr('href', csvFile);
-        $('#csvDlLink').attr('style', 'display:block');
+        $('#csvDownload').attr('href', csvFile);
+    }
+    
+    function setGardenDownload() {
+        var csvString = 'Key,Latin name,Common name,Spread,Height,Count\n';
+        for (var i = 0; i < data.allGardens[activeGarden].plants.length; i++) {
+            csvString += data.allGardens[activeGarden].plants[i].slice(2, 3) + ',';
+            csvString += data.allGardens[activeGarden].plants[i].slice(0, 2).join() + ',';
+            csvString += data.allGardens[activeGarden].plants[i].slice(3, 6).join() + '\n';
+        }
         
-        setTimeout(hideCsv, 10000);
+        var blob = new Blob([csvString], {type: 'text/csv'});
+        
+        if (gardenCsv) {
+            window.URL.revokeObjectURL(gardenCsv);
+        }
+        
+        gardenCsv = window.URL.createObjectURL(blob);
+        
+        $('#downloadGarden').attr('href', gardenCsv);
     }
     
     function hideBackup() {
@@ -293,8 +307,11 @@ $(document).ready(function(){
     
     var intervalId = setInterval(function() {
         localStorage.setItem('gardenData', JSON.stringify(data));
+        backup();
+        setLibraryDownload();
+        setGardenDownload();
         console.log('saved');
-    }, 5000);
+    }, 1000);
     console.log(intervalId);
     
     function clearCache() {
